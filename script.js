@@ -6,40 +6,44 @@ function onScreen() {
 };
 
 window.addEventListener("click", (event) => {
-    if(event.target === document.getElementById("one")) {
+    if (event.target === document.getElementById("one")) {
         document.getElementById("eval").innerHTML += (document.getElementById("one").textContent);
     }
 
-    else if(event.target === document.getElementById("two")) {
+    else if (event.target === document.getElementById("two")) {
         document.getElementById("eval").innerHTML += (document.getElementById("two").textContent);
     }
 
-    else if(event.target === document.getElementById("three")) {
+    else if (event.target === document.getElementById("three")) {
         document.getElementById("eval").innerHTML += (document.getElementById("three").textContent);
     }
 
-    else if(event.target === document.getElementById("four")) {
+    else if (event.target === document.getElementById("four")) {
         document.getElementById("eval").innerHTML += (document.getElementById("four").textContent);
     }
 
-    else if(event.target === document.getElementById("five")) {
+    else if (event.target === document.getElementById("five")) {
         document.getElementById("eval").innerHTML += (document.getElementById("five").textContent);
     }
     
-    else if(event.target === document.getElementById("six")) {
+    else if (event.target === document.getElementById("six")) {
         document.getElementById("eval").innerHTML += (document.getElementById("six").textContent);
     }
 
-    else if(event.target === document.getElementById("seven")) {
+    else if (event.target === document.getElementById("seven")) {
         document.getElementById("eval").innerHTML += (document.getElementById("seven").textContent);
     }
 
-    else if(event.target === document.getElementById("eight")) {
+    else if (event.target === document.getElementById("eight")) {
         document.getElementById("eval").innerHTML += (document.getElementById("eight").textContent);
     }
 
-    else if(event.target === document.getElementById("nine")) {
+    else if (event.target === document.getElementById("nine")) {
         document.getElementById("eval").innerHTML += (document.getElementById("nine").textContent);
+    }
+
+    else if (event.target === document.getElementById("decimal")) {
+        document.getElementById("eval").innerHTML += (document.getElementById("decimal").textContent);
     }
 
     else if (event.target === document.getElementById("add")) {
@@ -59,11 +63,11 @@ window.addEventListener("click", (event) => {
     }
 
     else if (event.target === document.getElementById("equals")) {
-        document.getElementById('ans').innerHTML = eval(document.getElementById("eval").textContent);
+        document.getElementById('display').innerHTML = eval(document.getElementById("eval").textContent);
     }
 
     else if (event.target === document.getElementById("clear")) {
         document.getElementById("eval"). innerHTML = '&nbsp;';
-        document.getElementById("ans").innerHTML = '&nbsp;';
+        document.getElementById("display").innerHTML = '0';
     }
 });
