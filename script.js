@@ -1,73 +1,73 @@
-var input = document.getElementById("eval");
-var output = document.getElementById("ans");
+document.addEventListener("click", handleClick);
+var display = "";
+var mathExpressionRegex =
+  /^(0|[1-9][0-9]*)([+\-*/]?(\d+(\.\d+)?(?!.*\.{2,})\d*)?)*$/;
 
-function onScreen() {
-    console.log(this.document)
-};
+function handleClick(event) {
+  const value = event.target.textContent;
+  switch (value) {
+    case "=":
+      calculate();
+      break;
+    case "AC":
+      clearDisplay();
+      break;
+    default:
+      updateDisplay(value);
+  }
+}
 
-window.addEventListener("click", (event) => {
-    if (event.target === document.getElementById("one")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("one").textContent);
+function updateDisplay(value) {
+  var expression = value;
+  if (expression.length == 1) {
+    document.getElementById("eval").textContent += expression;
+    display += expression;
+    console.log(document.getElementById("eval").textContent.length);
+    if (expression == "+") {
+      document.getElementById("display").textContent = "+";
+      display = "";
+    } else if (expression == "-") {
+      document.getElementById("display").textContent = "-";
+      display = "";
+    } else if (expression == "*") {
+      document.getElementById("display").textContent = "*";
+      display = "";
+    } else if (expression == "/") {
+      document.getElementById("display").textContent = "/";
+      display = "";
+    } else {
+      document.getElementById("display").textContent = display;
     }
+  }
+}
 
-    else if (event.target === document.getElementById("two")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("two").textContent);
-    }
+function calculate() {
+  console.log(document.getElementById("eval").textContent);
+  if (document.getElementById("eval").innerHTML == "&nbsp;") {
+    clearDisplay();
+  } else {
+    const expression = document.getElementById("eval").textContent;
+    var result = safeEval(expression);
 
-    else if (event.target === document.getElementById("three")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("three").textContent);
+    if (result !== null) {
+      document.getElementById("display").textContent = result;
+      document.getElementById("eval").textContent = result;
+    } else {
+      alert("Give a valid expression");
     }
+  }
+}
 
-    else if (event.target === document.getElementById("four")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("four").textContent);
-    }
+function clearDisplay() {
+  document.getElementById("eval").innerHTML = "&nbsp;";
+  document.getElementById("display").textContent = 0;
+  display = "";
+}
 
-    else if (event.target === document.getElementById("five")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("five").textContent);
-    }
-    
-    else if (event.target === document.getElementById("six")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("six").textContent);
-    }
-
-    else if (event.target === document.getElementById("seven")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("seven").textContent);
-    }
-
-    else if (event.target === document.getElementById("eight")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("eight").textContent);
-    }
-
-    else if (event.target === document.getElementById("nine")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("nine").textContent);
-    }
-
-    else if (event.target === document.getElementById("decimal")) {
-        document.getElementById("eval").innerHTML += (document.getElementById("decimal").textContent);
-    }
-
-    else if (event.target === document.getElementById("add")) {
-        document.getElementById("eval").innerHTML += document.getElementById("add").textContent;
-    }
-
-    else if (event.target === document.getElementById("subtract")) {
-        document.getElementById("eval").innerHTML += document.getElementById("subtract").textContent;
-    }
-
-    else if (event.target === document.getElementById("multiply")) {
-        document.getElementById("eval").innerHTML += '*';
-    }
-
-    else if (event.target === document.getElementById("divide")) {
-        document.getElementById("eval").innerHTML += document.getElementById("divide").textContent;
-    }
-
-    else if (event.target === document.getElementById("equals")) {
-        document.getElementById('display').innerHTML = eval(document.getElementById("eval").textContent);
-    }
-
-    else if (event.target === document.getElementById("clear")) {
-        document.getElementById("eval"). innerHTML = '&nbsp;';
-        document.getElementById("display").innerHTML = '0';
-    }
-});
+function safeEval(expression) {
+  try {
+    return eval(expression);
+  } catch (error) {
+    return null;
+  }
+}
