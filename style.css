@@ -45,5 +45,16 @@ body {
   grid-area: 4 / 4 / 6 / 5;
 }
 
-.btn {
+#quantity {
+  color: white;
+}
+
+input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  color: inherit;
+  background: none;
+  appearance: none;
 }
