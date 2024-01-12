@@ -19,7 +19,6 @@ function updateDisplay(value) {
   if (expression.length == 1) {
     document.getElementById("eval").textContent += expression;
     display += expression;
-
     document.getElementById("eval").textContent = document
       .getElementById("eval")
       .textContent.replace(/(\.\d*)\./g, "$1");
@@ -52,41 +51,17 @@ function calculate() {
   if (document.getElementById("eval").innerHTML == "&nbsp;") {
     clearDisplay();
   } else {
+    document.getElementById("eval").innerHTML = document
+      .getElementById("eval")
+      .innerHTML.replace(/&nbsp;/g, "");
     const expression = document.getElementById("eval").textContent;
-    const lastOperatorIndex = findLastOperator(expression);
+    var result = safeEval(expression);
 
-    if (lastOperatorIndex !== -1) {
-      const lastOperator = expression[lastOperatorIndex];
-      const operand1 = expression.substring(0, lastOperatorIndex);
-      const operand2 = expression.substring(lastOperatorIndex + 1);
-
-      // Evaluate the expression using the last operator and operands
-      const result = safeEval(operand1 + lastOperator + operand2);
-      //var result = safeEval(expression);
-
-      if (result !== null) {
-        document.getElementById("display").textContent = result;
-        document.getElementById("eval").textContent = result;
-      }
+    if (result !== null) {
+      document.getElementById("display").textContent = result;
+      document.getElementById("eval").textContent = result;
     }
   }
-}
-
-function findLastOperator(expression) {
-  let lastOperatorIndex = -1;
-
-  for (let i = expression.length - 1; i >= 0; i--) {
-    if ("+-*/".includes(expression[i])) {
-      // If lastOperatorIndex is -1 or the previous character is not an operator,
-      // consider the current character as the last non-consecutive operator
-      if (lastOperatorIndex === -1 || !"+-*/".includes(expression[i - 1])) {
-        lastOperatorIndex = i;
-        break;
-      }
-    }
-  }
-
-  return lastOperatorIndex;
 }
 
 function clearDisplay() {
@@ -97,7 +72,35 @@ function clearDisplay() {
 
 function safeEval(expression) {
   try {
-    return eval(expression);
+    const mathRegex = /^(-?\d+(\.\d+)?(\s*[+\-*/]\s*-?\d+(\.\d+)?\s*)*)*$/;
+    if (mathRegex.test(expression) === true) {
+      return eval(expression);
+    } else {
+      var string = "";
+      const digit = /^\d+(\.\d+)?$/;
+      const operator = /^[+\-*/]$/;
+      var one = 0;
+      var two = 0;
+      for (let i = 0; i < expression.length; i++) {
+        if (!digit.test(expression[i])) {
+          one = i;
+          break;
+        }
+      }
+
+      string += expression.substring(0, one);
+      for (let i = one; i < expression.length; i++) {
+        if (digit.test(expression[i])) {
+          two = i;
+          break;
+        }
+      }
+      if (operator.test(expression[two - 1])) {
+        string += expression.substring(two - 1);
+      }
+      console.log(string);
+      return eval(string);
+    }
   } catch (error) {
     return null;
   }
